@@ -5,6 +5,9 @@ from selenium.webdriver import ChromeOptions
 from selenium.webdriver.common.by import By
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.webdriver.common.keys import Keys
+import time
+from config import config
 
 
 def open_login(login_button, max_try=300):
@@ -19,6 +22,36 @@ def open_login(login_button, max_try=300):
         max_try -= 1
 
         open_login(login_button, max_try)
+
+
+def login(driver):
+    nif_input = driver.find_elements(by=By.ID, value="nif")
+
+    nif_input = nif_input[0]
+
+    nif_input.send_keys(config.dni)
+
+    password_input = driver.find_elements(by=By.ID, value="password")
+
+    password_input = password_input[0]
+
+    password_input.send_keys(config.password)
+
+    checkbox = driver.find_elements(by=By.TAG_NAME, value="md-checkbox")
+
+    checkbox = checkbox[0]
+
+    checkbox.click()
+
+    dialog = driver.find_element(by=By.XPATH, value="//div[@class = 'md-actions']/button")
+
+    dialog.click()
+
+    time.sleep(1)
+
+    submit = driver.find_element(by=By.XPATH, value="//button[@ng-click = 'vm.submitLoginChave()']")
+
+    submit.click()
 
 
 def innit():
@@ -39,6 +72,8 @@ def innit():
     access_button = access_button[0]
 
     open_login(access_button)
+
+    login(driver)
 
     #driver.close()
 
