@@ -53,6 +53,26 @@ def login(driver):
 
     submit.click()
 
+    time.sleep(1)
+
+    driver.get("https://esaude.sergas.gal/EPACI_epaciente/#/dynamic-view?idView=60f534f9c6fc339762662291")
+
+    time.sleep(1)
+
+    dispensation_plan = driver.find_element(by=By.XPATH, value="//div[@class = 'col-12 mb-4 ng-star-inserted']")
+
+    dispensation_plan.click()
+
+    time.sleep(1)
+
+    # download_button = driver.find_element(by=By.ID, value="//button[@id = 'download']")
+    #
+    # download_button.click()
+
+    driver.switch_to.window(driver.window_handles[1])
+
+    print(driver.current_url)
+
 
 def innit():
 
